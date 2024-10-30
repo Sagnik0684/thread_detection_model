@@ -1,16 +1,6 @@
-from flask import Flask, render_template
-from flask_sqlalchemy import SQLAlchemy
-from routes import initialize_routes
-import config
+from create_app import create_app
 
-app = Flask(__name__)
-app.config.from_object(config)
-
-# Initialize Database
-db = SQLAlchemy(app)
-
-# Initialize Routes
-initialize_routes(app)
+app = create_app()
 
 if __name__ == "__main__":
     app.run(debug=True)
