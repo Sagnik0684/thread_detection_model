@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Threat Detection Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>Threat Detection Dashboard</h1>
+    <button id="load-alerts">Load Alerts</button>
+    <div id="alerts"></div>
+
+    <script>
+        document.getElementById('load-alerts').addEventListener('click', async () => {
+            const response = await fetch('/api/alerts');
+            const data = await response.json();
+            const alertDiv = document.getElementById('alerts');
+            alertDiv.innerHTML = data.map(alert => `<p>${alert.src_ip} - ${alert.threat_level}</p>`).join('');
+        });
+    </script>
+</body>
+</html>
