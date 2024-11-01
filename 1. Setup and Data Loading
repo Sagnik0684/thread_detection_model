@@ -1,0 +1,12 @@
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import classification_report, accuracy_score
+
+# Load dataset
+# Example dataset structure with 'message' for email content and 'label' (1 for phishing, 0 for legitimate)
+data = pd.read_csv('phishing_emails.csv')
+
+# Display sample data
+print(data.head())
