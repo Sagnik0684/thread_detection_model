@@ -1,0 +1,11 @@
+# Calculate reconstruction errors
+reconstructions = autoencoder.predict(X_scaled)
+mse = np.mean(np.power(X_scaled - reconstructions, 2), axis=1)
+
+# Define a threshold for anomalies
+threshold = np.percentile(mse, 95)  # 95th percentile
+
+# Predict anomalies
+data['predicted_anomaly'] = mse > threshold
+print(f"Threshold: {threshold}")
+print(f"Accuracy: {accuracy_score(data['is_anomaly'], data['predicted_anomaly'])}")
