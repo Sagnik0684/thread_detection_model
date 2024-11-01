@@ -1,0 +1,7 @@
+# Separate features and labels
+X = data[columns]
+y = data['is_anomaly']
+
+# Normalize the data
+scaler = MinMaxScaler()
+X_scaled = scaler.fit_transform(X)
