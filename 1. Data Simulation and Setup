@@ -1,0 +1,42 @@
+import numpy as np
+import pandas as pd
+from sklearn.preprocessing import MinMaxScaler
+from sklearn.cluster import KMeans
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import Dense
+from tensorflow.keras import regularizers
+from sklearn.metrics import accuracy_score
+
+# Simulate data
+np.random.seed(42)
+
+# Define columns for network traffic, user login times, and app usage activity
+columns = ['network_packets', 'session_duration', 'login_time', 'data_transfer', 'cpu_usage', 'memory_usage', 'app_activity']
+normal_data = pd.DataFrame({
+    'network_packets': np.random.normal(loc=1000, scale=100, size=1000),
+    'session_duration': np.random.normal(loc=300, scale=50, size=1000),
+    'login_time': np.random.normal(loc=9, scale=3, size=1000),
+    'data_transfer': np.random.normal(loc=500, scale=100, size=1000),
+    'cpu_usage': np.random.normal(loc=50, scale=10, size=1000),
+    'memory_usage': np.random.normal(loc=70, scale=15, size=1000),
+    'app_activity': np.random.normal(loc=100, scale=20, size=1000)
+})
+
+# Add anomalous data
+anomalies = pd.DataFrame({
+    'network_packets': np.random.normal(loc=3000, scale=300, size=50),
+    'session_duration': np.random.normal(loc=50, scale=10, size=50),
+    'login_time': np.random.normal(loc=3, scale=1, size=50),
+    'data_transfer': np.random.normal(loc=3000, scale=200, size=50),
+    'cpu_usage': np.random.normal(loc=90, scale=5, size=50),
+    'memory_usage': np.random.normal(loc=90, scale=5, size=50),
+    'app_activity': np.random.normal(loc=200, scale=20, size=50)
+})
+
+# Concatenate normal data and anomalies
+data = pd.concat([normal_data, anomalies], ignore_index=True)
+data['is_anomaly'] = [0]*1000 + [1]*50  # Label anomalies
+
+# Shuffle dataset
+data = data.sample(frac=1).reset_index(drop=True)
+print(data.head())
